@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Be My Valentine ❤️ v2</title>
+  <title>Be My Valentine ❤️</title>
 
   <style>
     body {
@@ -125,5 +125,36 @@
     });
 
     // Floating hearts follow cursor
-    document.addEventListener("mousemove", (e
+    document.addEventListener("mousemove", (e) => {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = e.pageX + "px";
+      heart.style.top = e.pageY + "px";
+      document.body.appendChild(heart);
 
+      setTimeout(() => heart.remove(), 2000);
+    });
+
+    // YES click success
+    yesBtn.addEventListener("click", () => {
+      document.body.innerHTML = `
+        <div style="
+          height:100vh;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          flex-direction:column;
+          background:#ffb6c1;
+          font-family:Arial;
+          text-align:center;
+        ">
+          <h1 style="font-size:52px;color:#e6005c;">She said YES ❤️🥰</h1>
+          <p style="font-size:24px;">Best decision of the day.</p>
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>
