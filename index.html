@@ -94,39 +94,45 @@
     <button id="yesBtn">Yes 💘</button>
   </div>
 
- <script>
+<script>
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
 
+  // Fix YES button position
+  yesBtn.style.position = "relative";
+
+  // YES button grows every 2 seconds
   let scale = 1;
-  let escapeCount = 0;
-  const maxEscapes = 5; // after this, YES stops running
-
-  // YES button behavior
-  yesBtn.addEventListener("mouseover", () => {
-    if (escapeCount < maxEscapes) {
-      escapeCount++;
-
-      scale += 0.15;
-      yesBtn.style.transform = `scale(${scale})`;
-
-      const x = Math.random() * (window.innerWidth - 180);
-      const y = Math.random() * (window.innerHeight - 180);
-      yesBtn.style.left = x + "px";
-      yesBtn.style.top = y + "px";
-    } else {
-      // After running enough, it stays put
-      yesBtn.style.position = "static";
-    }
-  });
-
-  // NO button makes YES grow
-  noBtn.addEventListener("mouseover", () => {
+  setInterval(() => {
     scale += 0.1;
     yesBtn.style.transform = `scale(${scale})`;
+  }, 2000);
+
+  // NO button runs away from cursor
+  noBtn.style.position = "absolute";
+
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 150);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
   });
 
-  // YES click finally works
+  // Floating hearts following cursor
+  document.addEventListener("mousemove", (e) => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = e.pageX + "px";
+    heart.style.top = e.pageY + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 2000);
+  });
+
+  // YES click success screen
   yesBtn.addEventListener("click", () => {
     document.body.innerHTML = `
       <div style="
@@ -139,22 +145,10 @@
         font-family:Arial;
         text-align:center;
       ">
-        <h1 style="font-size:48px;color:#e6005c;">YAY!! ❤️🥰</h1>
-        <p style="font-size:22px;">You just made me the happiest guy alive.</p>
+        <h1 style="font-size:52px;color:#e6005c;">She said YES ❤️🥰</h1>
+        <p style="font-size:24px;">Best decision of the day.</p>
       </div>
     `;
-  });
-
-  // Floating hearts following cursor
-  document.addEventListener("mousemove", (e) => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = e.pageX + "px";
-    heart.style.top = e.pageY + "px";
-    document.body.appendChild(heart);
-
-    setTimeout(() => heart.remove(), 2000);
   });
 </script>
 
